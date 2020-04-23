@@ -1,5 +1,12 @@
 package wooteco.helloworld.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import wooteco.helloworld.domain.User;
 
@@ -10,28 +17,33 @@ public class UserController {
     /**
      * GET /users
      */
-    public String sayHi(String name) {
+    // RestController가 있어서 @ResponseBody를 안 써도 된다.
+    @GetMapping("/users")
+    public String sayHi(@RequestParam(value="name", defaultValue = "") String name) {
         return "Hi " + name;
     }
 
     /**
      * GET /users/{id}
      */
-    public String retrieveUser(Long id) {
+    @GetMapping("/users/{id}")
+    public String retrieveUser(@PathVariable Long id) {
         return "user's id is " + id;
     }
 
     /**
      * POST /users
      */
-    public String createUserWithJson(User user) {
+    @PostMapping("/users")
+    public String createUserWithJson(@RequestBody User user) {
         return "Hello " + user.getName();
     }
 
     /**
      * POST /users/form
      */
-    public String createUserWithForm(Map<String, String> paramMap) {
+    @PostMapping("/users/form")
+    public String createUserWithForm(@RequestParam Map<String, String> paramMap) {
         return "Hello " + paramMap.get("name");
     }
 
